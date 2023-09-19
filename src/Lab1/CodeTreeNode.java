@@ -23,4 +23,8 @@ public class CodeTreeNode implements Comparable<CodeTreeNode> {
     public int compareTo(CodeTreeNode o) {
         return o.frequency - frequency;
     }
+
+    public int getFrequency() {
+        return frequency;
+    }
 }
