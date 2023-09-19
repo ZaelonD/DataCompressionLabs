@@ -10,6 +10,7 @@ public class ReadingTextFromConsole implements ReadService {
     public ReadingTextFromConsole() {
         System.out.println("Введите текст, который хотите закодировать");
         SCANNER = new Scanner(System.in);
+        readTheText();
     }
 
     @Override
