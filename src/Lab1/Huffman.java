@@ -1,2 +1,5 @@
-package Lab1;public class Huffman {
+package Lab1;
+
+public class Huffman {
+
 }
