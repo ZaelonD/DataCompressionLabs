@@ -1,47 +1,32 @@
 package Lab1;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.TreeMap;
-
 public class HuffmanFromConsoleImpl implements HuffmanLogic {
 
-    private ReadingTextFromConsole read;
-    private Frequency frequency;
-    private TreeMap<Character, Integer> frequencies;
-    ArrayList<CodeTreeNode> codeTreeNodes;
+    private final EncodeText encodeText;
+    private final DecodeText decodeText;
 
     public HuffmanFromConsoleImpl() {
-        read = new ReadingTextFromConsole();
-        frequency = new Frequency();
-        // Вычисляем частоты символов в тексте
-        frequencies = frequency.countFrequency(read.getText());
-        // Список для листов дерева
-        codeTreeNodes = new ArrayList<>();
+        this.encodeText = new EncodeText();
+        this.decodeText = new DecodeText();
     }
 
     @Override
     public void runHuffman() {
-        // Генерируем список листов дерева
-        generateCodeTreeNodes();
-        CodeTreeNode tree = createCodeTree();
-    }
+        long startTimeEncoded = System.currentTimeMillis();
+        // Применяем функцию кодирования
+        encodeText.encode();
+        // Записываем результат кодирования в переменную code
+        String code = encodeText.getEncodedText();
+        long endTimeEncoded = System.currentTimeMillis();
 
-    private void generateCodeTreeNodes() {
-        for (Character c : frequencies.keySet()) {
-            codeTreeNodes.add(new CodeTreeNode(c, frequencies.get(c)));
-        }
-    }
+        long startTimeDecoded = System.currentTimeMillis();
+        // Применяем функцию декодирования
+        decodeText.decode(code, encodeText.getTreeClass());
+        long endTimeDecoded = System.currentTimeMillis();
 
-    private CodeTreeNode createCodeTree() {
-        while (codeTreeNodes.size() > 1) {
-            Collections.sort(codeTreeNodes);
-            CodeTreeNode left = codeTreeNodes.remove(codeTreeNodes.size() - 1);
-            CodeTreeNode right = codeTreeNodes.remove(codeTreeNodes.size() - 1);
-
-            CodeTreeNode parent = new CodeTreeNode(null, right.getFrequency() + left.getFrequency(), left, right);
-            codeTreeNodes.add(parent);
-        }
-        return codeTreeNodes.get(0);
+        System.out.println("Время кодирования: " + (endTimeEncoded - startTimeEncoded) + " мс");
+        System.out.println("Время декодирования: " + (endTimeDecoded - startTimeDecoded) * 1000 + " мкс");
+        System.out.println("Размер исходной строки: " + encodeText.getInitialText().getBytes().length * 8 + " бит");
+        System.out.println("Размер сжатой строки: " + code.length() + " бит");
     }
 }

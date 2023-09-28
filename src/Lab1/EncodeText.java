@@ -72,4 +72,8 @@ public class EncodeText {
     public String getEncodedText() {
         return encodedText.toString();
     }
+
+    public CodeTreeNode getTreeClass() {
+        return treeClass.getTree();
+    }
 }
