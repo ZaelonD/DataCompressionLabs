@@ -1,8 +1,6 @@
 package Lab1;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class EncodeText {
     private final String initialText;
