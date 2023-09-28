@@ -1,6 +1,7 @@
 package Lab1;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class EncodeText {
@@ -11,6 +12,7 @@ public class EncodeText {
     private TreeMap<Character, Integer> frequencies;
     ArrayList<CodeTreeNode> codeTreeNodes;
     private final Tree treeClass;
+    TreeMap<Character, String> codes;
 
 
     public EncodeText() {
@@ -21,6 +23,7 @@ public class EncodeText {
         this.codeTreeNodes = new ArrayList<>();
         this.treeClass = new Tree();
         this.encodedText = new StringBuilder();
+        this.codes = new TreeMap<>();
     }
 
     public void encode() {
@@ -32,12 +35,10 @@ public class EncodeText {
         generateCodeTreeNodes();
         // Создаем дерево
         treeClass.createCodeTree(codeTreeNodes);
-        // Создаем пустое дерево для кодов каждого символа
-        TreeMap<Character, String> codes = new TreeMap<>();
         // Создаем таблицу префиксных кодов
         createTableCodes(codes);
         // Вывод
-        System.out.println("Таблица префиксных кодов:\n" + codes);
+        System.out.println("Таблица префиксных кодов:\n" + printTableCodes());
         // Составление закодированной строки
         mergeCodes(codes);
         // Вывод
@@ -75,5 +76,29 @@ public class EncodeText {
 
     public CodeTreeNode getTreeClass() {
         return treeClass.getTree();
+    }
+
+//    public String test() {
+//        StringBuilder stringBuilder = new StringBuilder("[");
+//        for (Map.Entry<Character, String> characterStringEntry : codes.entrySet()) {
+//            if (characterStringEntry.getKey() == ' ')
+//                stringBuilder.append("' '" + " = ").append(characterStringEntry.getValue());
+//            else
+//                stringBuilder.append("; '").append(characterStringEntry.getKey()).append("' = ").append(characterStringEntry.getValue());
+//        }
+//        stringBuilder.append("]");
+//        return stringBuilder.toString();
+//    }
+
+    public String printTableCodes() {
+        StringBuilder stringBuilder = new StringBuilder("[");
+        for (Map.Entry<Character, String> characterStringEntry : codes.entrySet()) {
+            if (characterStringEntry.getKey() == ' ')
+                stringBuilder.append("' '" + " = ").append(characterStringEntry.getValue());
+            else
+                stringBuilder.append("; '").append(characterStringEntry.getKey()).append("' = ").append(characterStringEntry.getValue());
+        }
+        stringBuilder.append("]");
+        return stringBuilder.toString();
     }
 }
