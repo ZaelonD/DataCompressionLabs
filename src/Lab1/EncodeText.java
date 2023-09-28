@@ -78,18 +78,7 @@ public class EncodeText {
         return treeClass.getTree();
     }
 
-//    public String test() {
-//        StringBuilder stringBuilder = new StringBuilder("[");
-//        for (Map.Entry<Character, String> characterStringEntry : codes.entrySet()) {
-//            if (characterStringEntry.getKey() == ' ')
-//                stringBuilder.append("' '" + " = ").append(characterStringEntry.getValue());
-//            else
-//                stringBuilder.append("; '").append(characterStringEntry.getKey()).append("' = ").append(characterStringEntry.getValue());
-//        }
-//        stringBuilder.append("]");
-//        return stringBuilder.toString();
-//    }
-
+    // Метод для вывода таблицы кодов
     public String printTableCodes() {
         StringBuilder stringBuilder = new StringBuilder("[");
         for (Map.Entry<Character, String> characterStringEntry : codes.entrySet()) {
