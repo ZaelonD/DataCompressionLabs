@@ -6,17 +6,15 @@ public class EncodeText {
     private final String initialText;
     private final StringBuilder encodedText;
     private final Frequency frequency;
-    CodeTreeNode codeTreeNode;
     private TreeMap<Character, Integer> frequencies;
-    ArrayList<CodeTreeNode> codeTreeNodes;
+    private final ArrayList<CodeTreeNode> codeTreeNodes;
     private final Tree treeClass;
-    TreeMap<Character, String> codes;
+    private final TreeMap<Character, String> codes;
 
 
     public EncodeText() {
         ReadingTextFromConsole read = new ReadingTextFromConsole();
         this.initialText = read.getText();
-        this.codeTreeNode = new CodeTreeNode();
         this.frequency = new Frequency();
         this.codeTreeNodes = new ArrayList<>();
         this.treeClass = new Tree();
