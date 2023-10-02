@@ -77,11 +77,17 @@ public class EncodeText {
     // Метод для вывода таблицы кодов
     public String printTableCodes() {
         StringBuilder stringBuilder = new StringBuilder("[");
+        int k = 0;
         for (Map.Entry<Character, String> characterStringEntry : codes.entrySet()) {
-            if (characterStringEntry.getKey() == ' ')
+            if (characterStringEntry.getKey() == ' ') {
                 stringBuilder.append("' '" + " = ").append(characterStringEntry.getValue());
-            else
+                k++;
+            } else if (k != 0)
                 stringBuilder.append("; '").append(characterStringEntry.getKey()).append("' = ").append(characterStringEntry.getValue());
+            else {
+                stringBuilder.append("'").append(characterStringEntry.getKey()).append("' = ").append(characterStringEntry.getValue());
+                k++;
+            }
         }
         stringBuilder.append("]");
         return stringBuilder.toString();
