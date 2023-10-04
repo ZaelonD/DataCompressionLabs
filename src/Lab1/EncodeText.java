@@ -10,6 +10,7 @@ public class EncodeText {
     private final ArrayList<CodeTreeNode> codeTreeNodes;
     private final Tree treeClass;
     private final TreeMap<Character, String> codes;
+    private final Calculate calc;
 
 
     public EncodeText() {
@@ -20,6 +21,7 @@ public class EncodeText {
         this.treeClass = new Tree();
         this.encodedText = new StringBuilder();
         this.codes = new TreeMap<>();
+        this.calc = new Calculate();
     }
 
     public void encode() {
@@ -37,6 +39,12 @@ public class EncodeText {
         System.out.println("Таблица префиксных кодов:\n" + printTableCodes());
         // Составление закодированной строки
         mergeCodes(codes);
+        // Считаем среднюю длинну кода
+        System.out.printf("Средняя длинна кода: %.2f бит %n", calc.calculateAverageCodeLength(codes, frequencies, initialText.length()));
+        // Считаем энтропию
+        System.out.printf("Энтропия: %.2f бит %n", calc.calculateEntropy(codes, frequencies, initialText.length()));
+        // Считаем избыточность кода
+        System.out.printf("Избыточность кода: %.2f бит %n", calc.calculateCodeRedundancy());
         // Вывод
         System.out.println("Кодирование: " + encodedText.toString());
     }
