@@ -4,7 +4,7 @@ import java.util.*;
 
 // Класс словарь
 public class Dictionary {
-    private static final int ENCODING_SIZE = 256; // Размер кодировки по таблице ASCII
+    private static int ENCODING_SIZE = 256; // Размер кодировки по таблице ASCII
     private HashMap<String, Integer> dictionary;
 
     public Dictionary() {
@@ -23,8 +23,8 @@ public class Dictionary {
         dictionary.put(String.valueOf((char) code), code);
     }
 
-    public void addSubstringInDictionary(String str, int code) {
-        dictionary.put(str, code);
+    public void addSubstringInDictionary(String str) {
+        dictionary.put(str, ENCODING_SIZE++);
     }
 
     public void printDictionary() {
