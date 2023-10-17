@@ -36,8 +36,4 @@ public class Dictionary {
     public HashMap<String, Integer> getDictionary() {
         return dictionary;
     }
-
-    public void setDictionary(HashMap<String, Integer> dictionary) {
-        this.dictionary = dictionary;
-    }
 }
