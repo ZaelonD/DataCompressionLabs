@@ -5,7 +5,7 @@ import java.util.*;
 // Класс словарь
 public class Dictionary {
     private static int ENCODING_SIZE = 256; // Размер кодировки по таблице ASCII
-    private HashMap<String, Integer> dictionary;
+    private Map<String, Integer> dictionary;
 
     public Dictionary() {
         initDictionary();
@@ -33,7 +33,7 @@ public class Dictionary {
         }
     }
 
-    public HashMap<String, Integer> getDictionary() {
+    public Map<String, Integer> getDictionary() {
         return dictionary;
     }
 }
