@@ -32,7 +32,7 @@ public class LZWImpl implements LZLogic {
             }
         }
         System.out.println("Время сжатия: " + (System.currentTimeMillis() - time) + " мс");
-        dict.writeDictionaryInFile("resources/dictionary_after_compress");
+        dict.writeDictionaryInFile("resources/dictionary_after_compress.txt");
         WriteInFile writeInFile = new WriteInFile("resources/encoded_file.txt");
         writeInFile.writeInt(compressList);
         System.out.println("Коэффициент сжатия: " + (double) text.toString().length() / compressList.size());
