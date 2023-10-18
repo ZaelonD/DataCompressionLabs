@@ -1,7 +1,7 @@
 package Lab2;
 
 import java.io.*;
-import java.util.List;
+import java.util.*;
 
 public class WriteInFile {
     private final PrintWriter pw;
@@ -32,7 +32,24 @@ public class WriteInFile {
             for (String word : list) {
                 pw.write(word);
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        pw.close();
+    }
 
+    public void writeHashMap(Map<String, Integer> dictionary) {
+        try {
+            int k = 0;
+            for (Map.Entry<String, Integer> entry : dictionary.entrySet()) {
+                if (k < 5) {
+                    pw.write(entry.toString() + " \t");
+                    k++;
+                } else {
+                    pw.write(entry.toString() + "\n");
+                    k = 0;
+                }
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

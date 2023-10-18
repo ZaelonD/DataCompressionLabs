@@ -1,36 +1,50 @@
 package Lab2;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
-// Класс словарь
 public class Dictionary {
-    private static int ENCODING_SIZE = 256; // Размер кодировки по таблице ASCII
+    private static int dictionarySize;
     private Map<String, Integer> dictionary;
+    private final String text;
 
-    public Dictionary() {
+    public Dictionary(String text) {
+        this.text = text;
         initDictionary();
+        writeDictionaryInFile("resources/init_dictionary.txt");
     }
 
-    // Инициализация словаря
+    public void writeDictionaryInFile(String path) {
+        WriteInFile writeInFile = new WriteInFile(path);
+        dictionary = dictionary.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue())
+                .collect(Collectors
+                        .toMap(Map.Entry::getKey,
+                                Map.Entry::getValue,
+                                (e1, e2) -> e1,
+                                LinkedHashMap::new));
+        writeInFile.writeHashMap(dictionary);
+    }
+
     private void initDictionary() {
         this.dictionary = new HashMap<>();
-        for (int codeASCII = 0; codeASCII < ENCODING_SIZE; codeASCII++) {
-            addSubstringInDictionary(codeASCII);
+        Set<Character> set = new HashSet<>();
+        for (int i = 0; i < text.length(); i++) {
+            set.add(text.charAt(i));
+        }
+        Iterator<Character> i = set.iterator();
+        for (dictionarySize = 0; i.hasNext(); dictionarySize++) {
+            addSubstringInDictionary(dictionarySize, String.valueOf(i.next()));
         }
     }
 
-    public void addSubstringInDictionary(int code) {
-        dictionary.put(String.valueOf((char) code), code);
+    public void addSubstringInDictionary(int code, String word) {
+        dictionary.put(word, code);
     }
 
     public void addSubstringInDictionary(String str) {
-        dictionary.put(str, ENCODING_SIZE++);
-    }
-
-    public void printDictionary() {
-        for (Map.Entry<String, Integer> entry : dictionary.entrySet()) {
-            System.out.println(entry.toString());
-        }
+        dictionary.put(str, dictionarySize++);
     }
 
     public Map<String, Integer> getDictionary() {

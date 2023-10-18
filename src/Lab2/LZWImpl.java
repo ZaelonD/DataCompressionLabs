@@ -9,35 +9,33 @@ public class LZWImpl implements LZLogic {
 
     public LZWImpl(String path) {
         this.readFromFile = new ReadFromFile(path);
-        this.dict = new Dictionary();
+        this.dict = new Dictionary(readFromFile.getText().toString());
     }
 
     @Override
     public void compress() {
         long time = System.currentTimeMillis();
         compressList = new ArrayList<>();
-        StringBuilder stringBuilder = readFromFile.getStringBuilder();
+        StringBuilder text = readFromFile.getText();
         StringBuilder str = new StringBuilder();
-        char symbol;
-        List<Character> list = new ArrayList<>();
-        for (int i = 0; i < stringBuilder.length(); i++) {
-            symbol = stringBuilder.toString().charAt(i);
-            list.add(symbol);
-            str.append(symbol);
-            if (dict.getDictionary().containsKey(str.toString())) {
-                compressList.add(dict.getDictionary().get(str.toString()));
-            } else if (!list.contains(symbol)) {
+        String buf = "";
+        for (int i = 0; i < text.length(); i++) {
+            str.append(text.toString().charAt(i));
+            if (!dict.getDictionary().containsKey(str.toString())) {
                 dict.addSubstringInDictionary(str.toString());
+                compressList.add(dict.getDictionary().get(buf));
                 str.delete(0, str.length() - 1);
-                compressList.add(dict.getDictionary().get(str.toString()));
-            } else {
-                str.delete(0, str.length() - 1);
-                compressList.add(dict.getDictionary().get(str.toString()));
+            }
+            buf = str.toString();
+            if (text.length() - i == 1) {
+                compressList.add(dict.getDictionary().get(buf));
             }
         }
         System.out.println("Время сжатия: " + (System.currentTimeMillis() - time) + " мс");
-        WriteInFile writeInFile = new WriteInFile("resources/encodedFile.txt");
+        dict.writeDictionaryInFile("resources/dictionary_after_compress");
+        WriteInFile writeInFile = new WriteInFile("resources/encoded_file.txt");
         writeInFile.writeInt(compressList);
+        System.out.println("Коэффициент сжатия: " + (double) text.toString().length() / compressList.size());
     }
 
     @Override
@@ -53,7 +51,9 @@ public class LZWImpl implements LZLogic {
             }
         }
         System.out.println("Время восстановления: " + (System.currentTimeMillis() - time) + " мс");
-        WriteInFile writeInFile = new WriteInFile("resources/decodedFile.txt");
+        StringBuilder text = readFromFile.getText();
+        System.out.printf("Качество сжатия: %.2f%s %n", 100 * ((double) list.size() / text.toString().length()), "%");
+        WriteInFile writeInFile = new WriteInFile("resources/decoded_file.txt");
         writeInFile.writeString(list);
     }
 }

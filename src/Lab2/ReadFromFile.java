@@ -29,7 +29,7 @@ public class ReadFromFile {
         }
     }
 
-    public StringBuilder getStringBuilder() {
+    public StringBuilder getText() {
         return stringBuilder;
     }
 }
